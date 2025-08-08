@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public string playerTag = "Player1"; // "Player1" または "Player2"
+    public enum ControlType { WASD, Arrow }
+    public ControlType controlType = ControlType.WASD;  // デフォルトはWASD
+
     public float moveSpeed = 5f;
 
     private Rigidbody2D rb;
-    private Vector2 move;
+    private Vector2 input;
 
     void Start()
     {
@@ -15,21 +17,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // 入力を取得
-        if (playerTag == "Player1")
+        if (controlType == ControlType.WASD)
         {
-            move.x = Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0;
-            move.y = Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0;
+            input.x = Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0;
+            input.y = Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0;
         }
-        else if (playerTag == "Player2")
+        else if (controlType == ControlType.Arrow)
         {
-            move.x = Input.GetKey(KeyCode.RightArrow) ? 1 : Input.GetKey(KeyCode.LeftArrow) ? -1 : 0;
-            move.y = Input.GetKey(KeyCode.UpArrow) ? 1 : Input.GetKey(KeyCode.DownArrow) ? -1 : 0;
+            input.x = Input.GetKey(KeyCode.RightArrow) ? 1 : Input.GetKey(KeyCode.LeftArrow) ? -1 : 0;
+            input.y = Input.GetKey(KeyCode.UpArrow) ? 1 : Input.GetKey(KeyCode.DownArrow) ? -1 : 0;
         }
     }
 
     void FixedUpdate()
     {
-        rb.velocity = move.normalized * moveSpeed;
+        rb.velocity = input.normalized * moveSpeed;
     }
 }
