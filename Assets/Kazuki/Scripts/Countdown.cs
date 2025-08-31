@@ -1,27 +1,36 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Countdown : MonoBehaviour
 {
-    public Text timerText;       // UIのTextをInspectorで設定
-    public int currentTime = 10; // 制限時間（秒）
-    private float timer = 1f;    // 1秒ごとのカウント用
+    public double countdownMinutes = 0.1;
+    public double countdownSeconds;
+    public Text timeText;
+    public Text finishText;
+
+    private void Start()
+    {
+        finishText.enabled = false; //テキスト非表示
+        countdownSeconds = countdownMinutes * 60;
+    }
 
     void Update()
     {
-        timer -= Time.deltaTime; // 経過時間を減らす
-
-        if (timer <= 0f && currentTime > 0)
+        if (countdownSeconds > 0)
         {
-            currentTime--; // 1秒経過ごとに-1
-            timer = 1f;    // カウントリセット
-            timerText.text = "残り" + currentTime.ToString() + "秒"; // UI更新
+            countdownSeconds -= Time.deltaTime;
+            var span = new TimeSpan(0, 0, (int)countdownSeconds);
+            timeText.text = span.ToString(@"mm\:ss");
+        }
 
-            if (currentTime <= 0)
-            {
-                timerText.text = "Time Up!";
-                Debug.Log("ゲーム終了");
-            }
+        if (countdownSeconds <= 0)
+        {
+            // 0秒になったときの処理
+            finishText.enabled = true; //テキスト表示
+            finishText.text = "TIME UP!!";
         }
     }
 }

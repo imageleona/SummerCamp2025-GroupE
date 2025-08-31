@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Kazuki/Scenes/Title.unity
+    guid: 8270e73d040fd20418a73f72d89baa76
+  - enabled: 1
+    path: Assets/Kazuki/Scenes/UI.unity
+    guid: 046bd9df6df79c547bde982786e51dad
   m_configObjects: {}
