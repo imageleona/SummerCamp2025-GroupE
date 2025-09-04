@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum TerritoryOwner
@@ -7,69 +8,84 @@ public enum TerritoryOwner
     Player2
 }
 
+public class TerritoryStatus
+{
+    public TerritoryOwner owner;
+    public int flagUsed;
+}
+
 public class TerritoryManager : MonoBehaviour
 {
-    public int numberOfTerritories = 5;
+    private Dictionary<string, TerritoryStatus> territoryStates = new();
 
-    private TerritoryOwner[] territoryOwners;
-    private int[] flagCosts;
-
-    void Awake()
+    public bool TryCapture(string territoryName, TerritoryOwner newOwner, int flagToUse)
     {
-        territoryOwners = new TerritoryOwner[numberOfTerritories];
-        flagCosts = new int[numberOfTerritories];
-
-        for (int i = 0; i < numberOfTerritories; i++)
+        if (!territoryStates.ContainsKey(territoryName))
         {
-            territoryOwners[i] = TerritoryOwner.None;
-            flagCosts[i] = 0;
-        }
-    }
-
-    public bool CanCapture(int index, TerritoryOwner challenger, int flagUsed)
-    {
-        if (territoryOwners[index] == challenger)
-            return false;
-
-        int currentCost = flagCosts[index];
-        return flagUsed > currentCost;
-    }
-
-    public void CaptureTerritory(int index, TerritoryOwner newOwner, int flagUsed)
-    {
-        territoryOwners[index] = newOwner;
-        flagCosts[index] = flagUsed;
-        Debug.Log($"Territory {index} is now owned by {newOwner} with {flagUsed} flags");
-    }
-
-    public bool TryCapture(int index, TerritoryOwner challenger, int flagUsed)
-    {
-        var flagManager = FindObjectOfType<PlayerFlagManager>();
-        var playerTag = (challenger == TerritoryOwner.Player1) ? PlayerTag.Player1 : PlayerTag.Player2;
-
-        if (!CanCapture(index, challenger, flagUsed))
-        {
-            Debug.Log("条件不足：フラッグ本数が少ない or 既に自分のもの");
-            return false;
+            territoryStates[territoryName] = new TerritoryStatus
+            {
+                owner = newOwner,
+                flagUsed = flagToUse
+            };
+            return true;
         }
 
-        if (!flagManager.ConsumeFlags(playerTag, flagUsed))
+        var current = territoryStates[territoryName];
+
+        if (current.owner == TerritoryOwner.None)
         {
-            Debug.Log("フラッグ不足！");
-            return false;
+            territoryStates[territoryName].owner = newOwner;
+            territoryStates[territoryName].flagUsed = flagToUse;
+            return true;
         }
 
-        CaptureTerritory(index, challenger, flagUsed);
-        return true;
+        if (current.owner != newOwner && flagToUse > current.flagUsed)
+        {
+            territoryStates[territoryName].owner = newOwner;
+            territoryStates[territoryName].flagUsed = flagToUse;
+            return true;
+        }
+
+        return false;
     }
 
-    public TerritoryOwner GetOwner(int index)
+    public bool TryRelease(string territoryName, TerritoryOwner owner)
     {
-        return territoryOwners[index];
+        if (!territoryStates.ContainsKey(territoryName)) return false;
+
+        var current = territoryStates[territoryName];
+
+        if (current.owner == owner)
+        {
+            // 放棄してフラッグを回収
+            current.owner = TerritoryOwner.None;
+            current.flagUsed = 0;
+            return true;
+        }
+
+        return false;
     }
 
-    public int GetFlagCost(int index)
+    public TerritoryOwner GetOwner(string territoryName)
     {
-        return flagCosts[index];
+        if (territoryStates.ContainsKey(territoryName))
+        {
+            return territoryStates[territoryName].owner;
+        }
+        return TerritoryOwner.None;
+    }
+
+    public int GetFlagUsed(string territoryName)
+    {
+        if (territoryStates.ContainsKey(territoryName))
+        {
+            return territoryStates[territoryName].flagUsed;
+        }
+        return 0;
+    }
+
+    public Dictionary<string, TerritoryStatus> GetAllTerritories()
+    {
+        return territoryStates;
     }
 }

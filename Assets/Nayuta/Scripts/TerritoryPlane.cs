@@ -2,25 +2,36 @@ using UnityEngine;
 
 public class TerritoryPlane : MonoBehaviour
 {
-    public int territoryIndex;
+    [Tooltip("このエリアの名前（ユニークな名称をInspectorで設定）")]
+    public string territoryName;
+
+    public bool player1Inside = false;
+    public bool player2Inside = false;
+
     private Renderer rend;
     private TerritoryManager manager;
 
     void Start()
     {
         rend = GetComponent<Renderer>();
-        rend.material = new Material(rend.material); // マテリアル共有回避
+        if (rend != null)
+        {
+            rend.material = new Material(rend.material); // マテリアル共有を防ぐ
+        }
+
         manager = FindObjectOfType<TerritoryManager>();
     }
 
     void Update()
     {
-        UpdateColor();  // 毎フレーム色を確認して更新
+        UpdateColor();
     }
 
     void UpdateColor()
     {
-        TerritoryOwner owner = manager.GetOwner(territoryIndex);
+        if (manager == null || rend == null || string.IsNullOrEmpty(territoryName)) return;
+
+        TerritoryOwner owner = manager.GetOwner(territoryName);
 
         if (owner == TerritoryOwner.Player1)
         {
@@ -32,13 +43,10 @@ public class TerritoryPlane : MonoBehaviour
         }
         else
         {
-            rend.material.color = Color.white;
+            // 未取得なら透明
+            rend.material.color = new Color(1f, 1f, 1f, 0f);
         }
     }
-
-    // 以下の Trigger 処理（プレイヤーが中にいるか）もそのまま残してOK
-    public bool player1Inside = false;
-    public bool player2Inside = false;
 
     void OnTriggerEnter(Collider other)
     {
