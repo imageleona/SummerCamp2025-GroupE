@@ -661,6 +661,7 @@ GameObject:
   - component: {fileID: 397219417}
   - component: {fileID: 397219416}
   - component: {fileID: 397219415}
+  - component: {fileID: 397219418}
   m_Layer: 0
   m_Name: Aduma2
   m_TagString: Untagged
@@ -755,6 +756,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397219413}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &397219418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397219413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Aduma2
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &411939145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -953,6 +969,7 @@ GameObject:
   - component: {fileID: 462787501}
   - component: {fileID: 462787500}
   - component: {fileID: 462787499}
+  - component: {fileID: 462787502}
   m_Layer: 0
   m_Name: Amakubo4
   m_TagString: Untagged
@@ -1047,6 +1064,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462787497}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &462787502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462787497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Amakubo4
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &586228119
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1245,6 +1277,7 @@ GameObject:
   - component: {fileID: 709155577}
   - component: {fileID: 709155576}
   - component: {fileID: 709155575}
+  - component: {fileID: 709155578}
   m_Layer: 0
   m_Name: dai2 Area
   m_TagString: Untagged
@@ -1339,6 +1372,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 709155573}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &709155578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709155573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: dai2 Area
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &749760611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1661,6 +1709,7 @@ GameObject:
   - component: {fileID: 857030457}
   - component: {fileID: 857030456}
   - component: {fileID: 857030455}
+  - component: {fileID: 857030458}
   m_Layer: 0
   m_Name: Amakubo2
   m_TagString: Untagged
@@ -1755,6 +1804,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857030453}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &857030458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857030453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Amakubo2
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &895611520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1829,6 +1893,7 @@ GameObject:
   - component: {fileID: 906997664}
   - component: {fileID: 906997663}
   - component: {fileID: 906997662}
+  - component: {fileID: 906997665}
   m_Layer: 0
   m_Name: Kasuga4
   m_TagString: Untagged
@@ -1923,6 +1988,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 906997660}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &906997665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906997660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Kasuga4
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &1000215167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2245,6 +2325,7 @@ GameObject:
   - component: {fileID: 1082845311}
   - component: {fileID: 1082845310}
   - component: {fileID: 1082845309}
+  - component: {fileID: 1082845312}
   m_Layer: 0
   m_Name: Kasuga Area
   m_TagString: Untagged
@@ -2339,6 +2420,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082845307}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1082845312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082845307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Kasuga Area
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1 &1106228773
 GameObject:
   m_ObjectHideFlags: 0
@@ -2458,7 +2554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  territoryName: 
+  territoryName: Aduma1
   player1Inside: 0
   player2Inside: 0
 --- !u!1 &1210774041
@@ -2473,6 +2569,7 @@ GameObject:
   - component: {fileID: 1210774045}
   - component: {fileID: 1210774044}
   - component: {fileID: 1210774043}
+  - component: {fileID: 1210774046}
   m_Layer: 0
   m_Name: Ichinoya
   m_TagString: Untagged
@@ -2567,6 +2664,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1210774041}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1210774046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210774041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Ichinoya
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1 &1225686873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,6 +2691,7 @@ GameObject:
   - component: {fileID: 1225686877}
   - component: {fileID: 1225686876}
   - component: {fileID: 1225686875}
+  - component: {fileID: 1225686878}
   m_Layer: 0
   m_Name: Aduma4
   m_TagString: Untagged
@@ -2673,6 +2786,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225686873}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1225686878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225686873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Aduma4
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1 &1228659518
 GameObject:
   m_ObjectHideFlags: 0
@@ -2685,6 +2813,7 @@ GameObject:
   - component: {fileID: 1228659522}
   - component: {fileID: 1228659521}
   - component: {fileID: 1228659520}
+  - component: {fileID: 1228659523}
   m_Layer: 0
   m_Name: Amakubo1
   m_TagString: Untagged
@@ -2779,6 +2908,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1228659518}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1228659523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228659518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Amakubo1
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1 &1244869395
 GameObject:
   m_ObjectHideFlags: 0
@@ -2791,6 +2935,7 @@ GameObject:
   - component: {fileID: 1244869399}
   - component: {fileID: 1244869398}
   - component: {fileID: 1244869397}
+  - component: {fileID: 1244869400}
   m_Layer: 0
   m_Name: Sakura
   m_TagString: Untagged
@@ -2885,6 +3030,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1244869395}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1244869400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244869395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Sakura
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1 &1286000223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2897,6 +3057,7 @@ GameObject:
   - component: {fileID: 1286000227}
   - component: {fileID: 1286000226}
   - component: {fileID: 1286000225}
+  - component: {fileID: 1286000228}
   m_Layer: 0
   m_Name: Igaku Area
   m_TagString: Untagged
@@ -2991,6 +3152,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1286000223}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1286000228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286000223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Igaku Area
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1 &1302768730
 GameObject:
   m_ObjectHideFlags: 0
@@ -3043,6 +3219,89 @@ Transform:
   - {fileID: 1210774042}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1311958259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1311958262}
+  - component: {fileID: 1311958261}
+  m_Layer: 0
+  m_Name: MinimapCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &1311958261
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311958259}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0.375
+    y: 0
+    width: 0.25
+    height: 0.25
+  near clip plane: 0.3
+  far clip plane: 5000
+  field of view: 46
+  orthographic: 0
+  orthographic size: 1000
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1311958262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311958259}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.67679036, y: 0.002208516, z: -0.0020303775, w: 0.73616976}
+  m_LocalPosition: {x: 9, y: 2843.9385, z: -268}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1363748554
 GameObject:
   m_ObjectHideFlags: 0
@@ -3055,6 +3314,7 @@ GameObject:
   - component: {fileID: 1363748558}
   - component: {fileID: 1363748557}
   - component: {fileID: 1363748556}
+  - component: {fileID: 1363748559}
   m_Layer: 0
   m_Name: dai3 Area
   m_TagString: Untagged
@@ -3149,6 +3409,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363748554}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1363748559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363748554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: dai3 Area
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &1397607191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3533,6 +3808,7 @@ GameObject:
   - component: {fileID: 1583692630}
   - component: {fileID: 1583692629}
   - component: {fileID: 1583692628}
+  - component: {fileID: 1583692631}
   m_Layer: 0
   m_Name: Kasuga3
   m_TagString: Untagged
@@ -3627,6 +3903,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583692626}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1583692631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583692626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Kasuga3
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &1592458830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3701,6 +3992,7 @@ GameObject:
   - component: {fileID: 1617235620}
   - component: {fileID: 1617235619}
   - component: {fileID: 1617235618}
+  - component: {fileID: 1617235621}
   m_Layer: 0
   m_Name: Aduma3
   m_TagString: Untagged
@@ -3795,6 +4087,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617235616}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1617235621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617235616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Aduma3
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &1703102405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3931,6 +4238,7 @@ GameObject:
   - component: {fileID: 1816915820}
   - component: {fileID: 1816915819}
   - component: {fileID: 1816915818}
+  - component: {fileID: 1816915821}
   m_Layer: 0
   m_Name: Amakubo3
   m_TagString: Untagged
@@ -4025,6 +4333,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816915816}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1816915821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816915816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Amakubo3
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &1821144094
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4223,6 +4546,7 @@ GameObject:
   - component: {fileID: 1843834717}
   - component: {fileID: 1843834716}
   - component: {fileID: 1843834715}
+  - component: {fileID: 1843834718}
   m_Layer: 0
   m_Name: Kasuga2
   m_TagString: Untagged
@@ -4317,6 +4641,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1843834713}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1843834718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843834713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Kasuga2
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &1876900683
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4526,8 +4865,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891935542}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.71786976, y: -0.1762209, z: 0.19635956, w: 0.64424545}
-  m_LocalPosition: {x: 245.77917, y: 509.80533, z: -1069.763}
+  m_LocalRotation: {x: 0.67679036, y: 0.0022085756, z: -0.002030421, w: 0.73616976}
+  m_LocalPosition: {x: 384.183, y: 573.39734, z: 322.8285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4681,6 +5020,7 @@ GameObject:
   - component: {fileID: 1944423580}
   - component: {fileID: 1944423579}
   - component: {fileID: 1944423578}
+  - component: {fileID: 1944423581}
   m_Layer: 0
   m_Name: Shukusha Area
   m_TagString: Untagged
@@ -4775,6 +5115,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944423576}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1944423581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944423576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Shukusha Area
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1 &1977248393
 GameObject:
   m_ObjectHideFlags: 0
@@ -4943,6 +5298,7 @@ GameObject:
   - component: {fileID: 2005977419}
   - component: {fileID: 2005977418}
   - component: {fileID: 2005977417}
+  - component: {fileID: 2005977420}
   m_Layer: 0
   m_Name: Kasuga1
   m_TagString: Untagged
@@ -5037,6 +5393,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005977415}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2005977420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005977415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Kasuga1
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1 &2007858797
 GameObject:
   m_ObjectHideFlags: 0
@@ -5155,6 +5526,7 @@ GameObject:
   - component: {fileID: 2025388191}
   - component: {fileID: 2025388190}
   - component: {fileID: 2025388189}
+  - component: {fileID: 2025388192}
   m_Layer: 0
   m_Name: dai1 Area
   m_TagString: Untagged
@@ -5249,6 +5621,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025388187}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2025388192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025388187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: dai1 Area
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1001 &2059671061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5323,6 +5710,7 @@ GameObject:
   - component: {fileID: 2138731252}
   - component: {fileID: 2138731251}
   - component: {fileID: 2138731250}
+  - component: {fileID: 2138731253}
   m_Layer: 0
   m_Name: Taigei Area
   m_TagString: Untagged
@@ -5417,6 +5805,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138731248}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2138731253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138731248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978ae2186fd7f2c4b8e2c38897be34c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  territoryName: Taigei Area
+  player1Inside: 0
+  player2Inside: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -5427,3 +5830,4 @@ SceneRoots:
   - {fileID: 1302768731}
   - {fileID: 1891935545}
   - {fileID: 2007858799}
+  - {fileID: 1311958262}
