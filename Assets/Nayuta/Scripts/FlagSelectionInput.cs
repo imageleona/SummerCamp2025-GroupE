@@ -2,70 +2,88 @@ using UnityEngine;
 
 public class FlagSelectionInput : MonoBehaviour
 {
-    private int selectedFlags = 1;
+    public PlayerTag playerTag;
+    public PlayerFlagManager flagManager;
+    public TerritoryManager territoryManager;
+
+    private int selectedFlagCount = 1;
+    private bool isSelecting = false;
+    private TerritoryPlane currentPlane;
 
     void Update()
     {
-        // Select flag count with number keys 1 to 9
-        for (KeyCode k = KeyCode.Alpha1; k <= KeyCode.Alpha9; k++)
+        // エリア取得呼び出し
+        if (!isSelecting)
         {
-            if (Input.GetKeyDown(k))
+            if ((playerTag == PlayerTag.Player1 && Input.GetKeyDown(KeyCode.F)) ||
+                (playerTag == PlayerTag.Player2 && Input.GetKeyDown(KeyCode.J)))
             {
-                selectedFlags = k - KeyCode.Alpha0;
-                Debug.Log($"Selected flags: {selectedFlags}");
+                // 今いるTerritoryPlaneを探す
+                currentPlane = FindCurrentPlane();
+                if (currentPlane != null)
+                {
+                    isSelecting = true;
+                    selectedFlagCount = 1;
+                    Debug.Log($"[FlagSelection] {playerTag} started selecting flags for {currentPlane.territoryName}");
+                }
             }
         }
-
-        // Player1 attempts capture with F key
-        if (Input.GetKeyDown(KeyCode.F))
+        else
         {
-            TryCaptureFromPlayer(TerritoryOwner.Player1, PlayerTag.Player1);
-        }
+            // カウント調整
+            if (Input.GetKeyDown(KeyCode.Alpha1)) selectedFlagCount = Mathf.Max(1, selectedFlagCount - 1);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) selectedFlagCount += 1;
 
-        // Player2 attempts capture with J key
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            TryCaptureFromPlayer(TerritoryOwner.Player2, PlayerTag.Player2);
+            Debug.Log($"[FlagSelection] {playerTag} selected flag count: {selectedFlagCount}");
+
+            // 確定
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                if (currentPlane != null)
+                {
+                    string name = currentPlane.territoryName;
+                    TerritoryOwner owner = (playerTag == PlayerTag.Player1) ? TerritoryOwner.Player1 : TerritoryOwner.Player2;
+
+                    // フラッグ足りる？
+                    if (flagManager.GetFlags(playerTag) >= selectedFlagCount)
+                    {
+                        bool success = territoryManager.TryCapture(name, owner, selectedFlagCount);
+                        if (success)
+                        {
+                            flagManager.ConsumeFlags(playerTag, selectedFlagCount);
+                            Debug.Log($"[FlagSelection] {playerTag} captured {name} with {selectedFlagCount} flags.");
+                        }
+                        else
+                        {
+                            Debug.Log($"[FlagSelection] {name} capture failed. Not enough flags or already owned.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log($"[FlagSelection] Not enough flags to capture {name}.");
+                    }
+
+                    // フィードバック
+                    Debug.Log($"[Status] {playerTag} now has {flagManager.GetFlags(playerTag)} flags.");
+                    foreach (var kvp in territoryManager.GetAllTerritories())
+                    {
+                        Debug.Log($"[Status] {kvp.Key}: {kvp.Value.owner}, {kvp.Value.flagUsed} flags used");
+                    }
+                }
+
+                isSelecting = false;
+            }
         }
     }
 
-    void TryCaptureFromPlayer(TerritoryOwner owner, PlayerTag tag)
+    // 自分が今乗っているTerritoryPlaneを見つける
+    TerritoryPlane FindCurrentPlane()
     {
-        TerritoryPlane[] planes = FindObjectsOfType<TerritoryPlane>();
-        TerritoryManager territoryManager = FindObjectOfType<TerritoryManager>();
-        PlayerFlagManager flagManager = FindObjectOfType<PlayerFlagManager>();
-
-        foreach (var plane in planes)
+        foreach (var plane in FindObjectsOfType<TerritoryPlane>())
         {
-            bool inside = (owner == TerritoryOwner.Player1) ? plane.player1Inside : plane.player2Inside;
-            if (inside)
-            {
-                bool success = territoryManager.TryCapture(plane.territoryIndex, owner, selectedFlags);
-
-                if (success)
-                {
-                    Debug.Log($"{owner} captured territory {plane.territoryIndex} with {selectedFlags} flags");
-                }
-                else
-                {
-                    Debug.Log($"{owner} failed to capture territory {plane.territoryIndex}");
-                }
-
-                PrintTerritoryState(territoryManager);
-                flagManager.PrintAllFlagCounts();
-                break;
-            }
+            if (playerTag == PlayerTag.Player1 && plane.player1Inside) return plane;
+            if (playerTag == PlayerTag.Player2 && plane.player2Inside) return plane;
         }
-    }
-
-    void PrintTerritoryState(TerritoryManager manager)
-    {
-        Debug.Log("=== Territory Ownership Status ===");
-        for (int i = 0; i < manager.numberOfTerritories; i++)
-        {
-            var owner = manager.GetOwner(i);
-            var cost = manager.GetFlagCost(i);
-            Debug.Log($"Territory {i}: {owner} - {cost} flags");
-        }
+        return null;
     }
 }
