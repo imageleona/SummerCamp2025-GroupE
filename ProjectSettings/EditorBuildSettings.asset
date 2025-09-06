@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Kazuki/Scenes/UI.unity
     guid: 046bd9df6df79c547bde982786e51dad
+  - enabled: 1
+    path: Assets/Nayuta/Scene/Game.unity
+    guid: c1fbc658090153a4984a5c06aec01202
+  - enabled: 1
+    path: Assets/Nayuta/Scene/Title.unity
+    guid: 783bae91acd3cfa4c87ee7dc0e58f5f7
+  - enabled: 1
+    path: Assets/Nayuta/Scene/Result.unity
+    guid: 9d3980645bdda914eb5920489819928e
   m_configObjects: {}
