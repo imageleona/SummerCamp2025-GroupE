@@ -1,66 +1,21 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider), typeof(Renderer))]
+[RequireComponent(typeof(Renderer), typeof(Collider))]
 public class TerritoryPlane : MonoBehaviour
 {
-    public string territoryName = "Area_0";
-
-    [HideInInspector] public bool player1Inside = false;
-    [HideInInspector] public bool player2Inside = false;
+    public string territoryName = "Territory";
+    public bool player1Inside = false;
+    public bool player2Inside = false;
+    public TerritoryOwner owner = TerritoryOwner.None;
 
     private Renderer rend;
-    private TerritoryOwner owner = TerritoryOwner.None;
 
-    void Awake()
+    void Start()
     {
         rend = GetComponent<Renderer>();
-
-        // 透明シェーダーにしておく（Standard または URP の Transparent）
-        SetTransparent();
-    }
-
-    void Update()
-    {
-        UpdateColor();
-    }
-
-    void SetTransparent()
-    {
-        if (rend.material.HasProperty("_Mode"))
+        if (rend != null && rend.material != null)
         {
-            // 標準シェーダーなら RenderingMode = Transparent に（※必要に応じて）
-            rend.material.SetFloat("_Mode", 3); // 3 = Transparent
-        }
-
-        // Enable transparency blending
-        rend.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        rend.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        rend.material.SetInt("_ZWrite", 0);
-        rend.material.DisableKeyword("_ALPHATEST_ON");
-        rend.material.EnableKeyword("_ALPHABLEND_ON");
-        rend.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        rend.material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-    }
-
-    public void SetOwner(TerritoryOwner newOwner)
-    {
-        owner = newOwner;
-        UpdateColor();
-    }
-
-    void UpdateColor()
-    {
-        if (owner == TerritoryOwner.None)
-        {
-            rend.material.color = new Color(1f, 1f, 1f, 0f); // 完全に透明
-        }
-        else if (owner == TerritoryOwner.Player1)
-        {
-            rend.material.color = new Color(0.2f, 0.5f, 1f, 1f); // 青
-        }
-        else if (owner == TerritoryOwner.Player2)
-        {
-            rend.material.color = new Color(1f, 0.3f, 0.3f, 1f); // 赤
+            rend.material.color = Color.white;
         }
     }
 
@@ -69,10 +24,12 @@ public class TerritoryPlane : MonoBehaviour
         if (other.CompareTag("Player1"))
         {
             player1Inside = true;
+            Debug.Log($"[TerritoryPlane] Player1 entered {territoryName}");
         }
         else if (other.CompareTag("Player2"))
         {
             player2Inside = true;
+            Debug.Log($"[TerritoryPlane] Player2 entered {territoryName}");
         }
     }
 
@@ -81,10 +38,48 @@ public class TerritoryPlane : MonoBehaviour
         if (other.CompareTag("Player1"))
         {
             player1Inside = false;
+            Debug.Log($"[TerritoryPlane] Player1 exited {territoryName}");
         }
         else if (other.CompareTag("Player2"))
         {
             player2Inside = false;
+            Debug.Log($"[TerritoryPlane] Player2 exited {territoryName}");
         }
+    }
+
+    public void SetOwner(TerritoryOwner newOwner)
+    {
+        Debug.Log($"[TerritoryPlane] SetOwner called: {territoryName} → {newOwner}");
+        owner = newOwner;
+        UpdateColor();
+    }
+
+    public void ResetOwner()
+    {
+        owner = TerritoryOwner.None;
+        if (rend != null && rend.material != null)
+        {
+            rend.material.color = Color.white;
+        }
+    }
+
+    private void UpdateColor()
+    {
+        Debug.Log($"[TerritoryPlane] UpdateColor called for {territoryName}, owner: {owner}");
+
+        if (rend == null || rend.material == null) return;
+
+        Color newColor = Color.white;
+
+        if (owner == TerritoryOwner.Player1)
+            newColor = Color.blue;
+        else if (owner == TerritoryOwner.Player2)
+            newColor = Color.red;
+
+        newColor.a = 1.0f; // 完全不透明
+
+        rend.material.color = newColor;
+
+        Debug.Log($"[TerritoryPlane] '{territoryName}' color updated to {newColor} (owner: {owner})");
     }
 }

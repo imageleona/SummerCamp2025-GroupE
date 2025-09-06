@@ -14,6 +14,11 @@ public class FlagCaptureUI : MonoBehaviour
 
     void Start()
     {
+        if (panel == null)
+        {
+            Debug.LogError("[FlagCaptureUI] panel is not assigned in Inspector.");
+        }
+
         panel.SetActive(false);
     }
 
@@ -25,22 +30,26 @@ public class FlagCaptureUI : MonoBehaviour
         {
             selectedFlagCount = Mathf.Max(minFlagCount, selectedFlagCount - 1);
             UpdateCounterText();
+            Debug.Log("[FlagCaptureUI] Count decreased: " + selectedFlagCount);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             selectedFlagCount = Mathf.Min(maxFlagCount, selectedFlagCount + 1);
             UpdateCounterText();
+            Debug.Log("[FlagCaptureUI] Count increased: " + selectedFlagCount);
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            Debug.Log("[FlagCaptureUI] Confirm pressed. Selected: " + selectedFlagCount);
             onConfirm?.Invoke(selectedFlagCount);
             Close();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("[FlagCaptureUI] Cancel pressed.");
             onCancel?.Invoke();
             Close();
         }
@@ -48,20 +57,42 @@ public class FlagCaptureUI : MonoBehaviour
 
     public void Open(System.Action<int> confirmCallback, System.Action cancelCallback = null)
     {
+        Debug.Log("[FlagCaptureUI] Open() called");
+
         onConfirm = confirmCallback;
         onCancel = cancelCallback;
         selectedFlagCount = 1;
         UpdateCounterText();
-        panel.SetActive(true);
+
+        if (panel == null)
+        {
+            Debug.LogError("[FlagCaptureUI] panel is NULL!");
+        }
+        else
+        {
+            Debug.Log("[FlagCaptureUI] panel.SetActive(true)");
+            panel.SetActive(true);
+        }
     }
 
     public void Close()
     {
-        panel.SetActive(false);
+        Debug.Log("[FlagCaptureUI] UI closed.");
+        if (panel != null)
+        {
+            panel.SetActive(false);
+        }
     }
 
     void UpdateCounterText()
     {
-        counterText.text = $"Flag Count: {selectedFlagCount}";
+        if (counterText != null)
+        {
+            counterText.text = "Flag Count: " + selectedFlagCount;
+        }
+        else
+        {
+            Debug.LogWarning("[FlagCaptureUI] counterText is NULL!");
+        }
     }
 }
