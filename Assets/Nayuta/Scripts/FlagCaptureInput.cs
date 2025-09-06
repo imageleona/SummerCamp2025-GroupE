@@ -21,6 +21,10 @@ public class FlagCaptureInput : MonoBehaviour
                 captureUI.Open(OnConfirm, OnCancel);
                 Debug.Log($"[CaptureInput] {playerTag} started flag selection for '{currentPlane.territoryName}'");
             }
+            else
+            {
+                Debug.LogWarning($"[CaptureInput] {playerTag} could not find a TerritoryPlane to capture!");
+            }
         }
     }
 
@@ -59,11 +63,19 @@ public class FlagCaptureInput : MonoBehaviour
 
     TerritoryPlane FindCurrentPlane()
     {
-        foreach (var plane in FindObjectsOfType<TerritoryPlane>())
+        TerritoryPlane[] planes = FindObjectsOfType<TerritoryPlane>();
+        foreach (var plane in planes)
         {
-            if (playerTag == PlayerTag.Player1 && plane.player1Inside) return plane;
-            if (playerTag == PlayerTag.Player2 && plane.player2Inside) return plane;
+            //Debug.Log($"[FindPlane] Checking plane: {plane.territoryName}, P1 inside: {plane.player1Inside}, P2 inside: {plane.player2Inside}");
+
+            if (playerTag == PlayerTag.Player1 && plane.player1Inside)
+                return plane;
+
+            if (playerTag == PlayerTag.Player2 && plane.player2Inside)
+                return plane;
         }
+
+        Debug.LogWarning($"[FindPlane] {playerTag} is not inside any TerritoryPlane.");
         return null;
     }
 

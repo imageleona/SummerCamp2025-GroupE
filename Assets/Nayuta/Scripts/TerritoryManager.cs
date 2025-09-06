@@ -8,84 +8,82 @@ public enum TerritoryOwner
     Player2
 }
 
-public class TerritoryStatus
-{
-    public TerritoryOwner owner;
-    public int flagUsed;
-}
-
 public class TerritoryManager : MonoBehaviour
 {
-    private Dictionary<string, TerritoryStatus> territoryStates = new();
+    private Dictionary<string, (TerritoryOwner owner, int flagUsed)> territories = new();
 
-    public bool TryCapture(string territoryName, TerritoryOwner newOwner, int flagToUse)
+    public bool TryCapture(string name, TerritoryOwner player, int flagCount)
     {
-        if (!territoryStates.ContainsKey(territoryName))
+        if (!territories.ContainsKey(name))
         {
-            territoryStates[territoryName] = new TerritoryStatus
+            territories[name] = (TerritoryOwner.None, 0);
+        }
+
+        var data = territories[name];
+
+        if (data.owner == player)
+        {
+            return false; // 自分の陣地なら無視
+        }
+
+        if (data.owner == TerritoryOwner.None || flagCount > data.flagUsed)
+        {
+            // 所有者と使用本数を更新
+            territories[name] = (player, flagCount);
+
+            // 色変更を反映
+            TerritoryPlane plane = FindPlaneByName(name);
+            if (plane != null)
             {
-                owner = newOwner,
-                flagUsed = flagToUse
-            };
-            return true;
-        }
+                plane.SetOwner(player);
+            }
 
-        var current = territoryStates[territoryName];
-
-        if (current.owner == TerritoryOwner.None)
-        {
-            territoryStates[territoryName].owner = newOwner;
-            territoryStates[territoryName].flagUsed = flagToUse;
-            return true;
-        }
-
-        if (current.owner != newOwner && flagToUse > current.flagUsed)
-        {
-            territoryStates[territoryName].owner = newOwner;
-            territoryStates[territoryName].flagUsed = flagToUse;
             return true;
         }
 
         return false;
     }
 
-    public bool TryRelease(string territoryName, TerritoryOwner owner)
+    public void Release(string name, TerritoryOwner requester)
     {
-        if (!territoryStates.ContainsKey(territoryName)) return false;
+        if (!territories.ContainsKey(name)) return;
 
-        var current = territoryStates[territoryName];
+        var data = territories[name];
 
-        if (current.owner == owner)
+        if (data.owner == requester)
         {
-            // 放棄してフラッグを回収
-            current.owner = TerritoryOwner.None;
-            current.flagUsed = 0;
-            return true;
-        }
+            territories[name] = (TerritoryOwner.None, 0);
 
-        return false;
+            TerritoryPlane plane = FindPlaneByName(name);
+            if (plane != null)
+            {
+                plane.ResetOwner();
+            }
+        }
     }
 
-    public TerritoryOwner GetOwner(string territoryName)
+    public int GetFlagUsed(string name)
     {
-        if (territoryStates.ContainsKey(territoryName))
-        {
-            return territoryStates[territoryName].owner;
-        }
-        return TerritoryOwner.None;
+        return territories.ContainsKey(name) ? territories[name].flagUsed : 0;
     }
 
-    public int GetFlagUsed(string territoryName)
+    public TerritoryOwner GetOwner(string name)
     {
-        if (territoryStates.ContainsKey(territoryName))
-        {
-            return territoryStates[territoryName].flagUsed;
-        }
-        return 0;
+        return territories.ContainsKey(name) ? territories[name].owner : TerritoryOwner.None;
     }
 
-    public Dictionary<string, TerritoryStatus> GetAllTerritories()
+    public Dictionary<string, (TerritoryOwner owner, int flagUsed)> GetAllTerritories()
     {
-        return territoryStates;
+        return territories;
+    }
+
+    private TerritoryPlane FindPlaneByName(string name)
+    {
+        foreach (var plane in FindObjectsOfType<TerritoryPlane>())
+        {
+            if (plane.territoryName == name)
+                return plane;
+        }
+        return null;
     }
 }
