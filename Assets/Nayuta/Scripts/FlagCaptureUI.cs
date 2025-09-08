@@ -18,9 +18,8 @@ public class FlagCaptureUI : MonoBehaviour
         {
             Debug.LogError("[FlagCaptureUI] panel is not assigned in Inspector.");
         }
-
-        panel.SetActive(false);
     }
+
 
     void Update()
     {
@@ -88,11 +87,13 @@ public class FlagCaptureUI : MonoBehaviour
     {
         if (counterText != null)
         {
-            counterText.text = "Flag Count: " + selectedFlagCount;
+            counterText.text =  selectedFlagCount + "–{";
         }
         else
         {
             Debug.LogWarning("[FlagCaptureUI] counterText is NULL!");
         }
     }
+
+
 }

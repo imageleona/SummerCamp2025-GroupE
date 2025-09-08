@@ -6,6 +6,7 @@ public class FlagCaptureInput : MonoBehaviour
     public PlayerFlagManager flagManager;
     public TerritoryManager territoryManager;
     public FlagCaptureUI captureUI;
+    public WarningPopupUI warningUI;  // ← 警告ポップアップUI
 
     private TerritoryPlane currentPlane;
 
@@ -24,6 +25,10 @@ public class FlagCaptureInput : MonoBehaviour
             else
             {
                 Debug.LogWarning($"[CaptureInput] {playerTag} could not find a TerritoryPlane to capture!");
+                if (warningUI != null)
+                {
+                    warningUI.Show("領域が見つかりません！");
+                }
             }
         }
     }
@@ -39,6 +44,10 @@ public class FlagCaptureInput : MonoBehaviour
         if (flagManager.GetFlags(playerTag) < flagCount)
         {
             Debug.LogWarning($"[CaptureInput] Not enough flags. {playerTag} has {flagManager.GetFlags(playerTag)}");
+            if (warningUI != null)
+            {
+                warningUI.Show("残りの旗の本数を超えているよ \n旗の本数を減らしてね");
+            }
             return;
         }
 
@@ -50,7 +59,12 @@ public class FlagCaptureInput : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"[CaptureInput] Failed to capture '{name}'. Use more flags than previous owner.");
+            
+            if (warningUI != null)
+            {
+                warningUI.Show($"ここはすでに相手が獲得したエリアだよ \n取り返すには旗の本数を増やしてみよう！");
+                Debug.LogWarning($"[CaptureInput] Failed to capture '{name}'. Use more flags than previous owner.");
+            }
         }
 
         PrintStatus();
@@ -66,8 +80,6 @@ public class FlagCaptureInput : MonoBehaviour
         TerritoryPlane[] planes = FindObjectsOfType<TerritoryPlane>();
         foreach (var plane in planes)
         {
-            //Debug.Log($"[FindPlane] Checking plane: {plane.territoryName}, P1 inside: {plane.player1Inside}, P2 inside: {plane.player2Inside}");
-
             if (playerTag == PlayerTag.Player1 && plane.player1Inside)
                 return plane;
 
