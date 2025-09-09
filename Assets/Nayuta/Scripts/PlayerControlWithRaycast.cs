@@ -12,7 +12,9 @@ public class PlayerControlWithRaycast : MonoBehaviour
     private float lookSpeed = 100f;
     private float cameraPitch = 20f;
 
-    public Transform cameraPivot;
+    [Header("Hierarchy References")]
+    public Transform modelTransform; // 子の3Dモデルをアサイン
+    public Transform cameraPivot;    // 子のカメラをアサイン
 
     [Header("References")]
     [SerializeField] private FlagCaptureInput flagCaptureInput;
@@ -46,7 +48,6 @@ public class PlayerControlWithRaycast : MonoBehaviour
         if (animator != null)
         {
             animator.SetFloat("Speed", currentSpeed);
-            //Debug.Log($"[{controlScheme}] Speed = {currentSpeed:F2}");
         }
     }
 
@@ -77,14 +78,12 @@ public class PlayerControlWithRaycast : MonoBehaviour
         Vector3 moveDirection = (transform.forward * v + transform.right * h).normalized;
         Vector3 targetPos = rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
 
-        // --- 全方位Raycastチェック ---
+        // Raycastによる壁チェック
         if (moveDirection != Vector3.zero)
         {
             Vector3[] directions = {
-                transform.forward,
-                -transform.forward,
-                transform.right,
-                -transform.right,
+                transform.forward, -transform.forward,
+                transform.right, -transform.right,
                 (transform.forward + transform.right).normalized,
                 (transform.forward - transform.right).normalized,
                 (-transform.forward + transform.right).normalized,
@@ -97,21 +96,26 @@ public class PlayerControlWithRaycast : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Wall"))
                     {
-                        // 壁が検出された → スライド
-                        Debug.Log($"[{controlScheme}] Wall detected at {hit.point} in direction {dir}");
                         Vector3 slide = Vector3.ProjectOnPlane(moveDirection, hit.normal).normalized;
                         targetPos = rb.position + slide * moveSpeed * Time.fixedDeltaTime;
-                        break; // 最初に当たった壁だけ処理
+                        break;
                     }
                 }
+            }
+
+            // モデルを進行方向に向ける
+            if (modelTransform != null)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(moveDirection, Vector3.up);
+                modelTransform.rotation = Quaternion.Slerp(modelTransform.rotation, targetRot, 0.2f);
             }
         }
 
         rb.MovePosition(targetPos);
 
-        // アニメーション用
         currentSpeed = moveDirection.magnitude;
     }
+
 
     public float cameraDistance = 7.5f;
 
