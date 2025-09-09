@@ -12,7 +12,7 @@ public class SceneTransition : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            Invoke("ChangeScene", 1.5f);
+            Invoke("ChangeScene", 0.5f);
         }
 
     }
