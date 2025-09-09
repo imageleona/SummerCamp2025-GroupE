@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public enum TerritoryOwner
 {
@@ -13,36 +14,39 @@ public class TerritoryManager : MonoBehaviour
     private Dictionary<string, (TerritoryOwner owner, int flagUsed)> territories = new();
     private Dictionary<string, int> territoryPoints = new(); // エリアごとの点数
 
+    private Dictionary<TerritoryOwner, int> totalScores = new()
+    {
+        { TerritoryOwner.Player1, 0 },
+        { TerritoryOwner.Player2, 0 }
+    };
+
     [Header("エリア一覧 (シーンにあるTerritoryPlane)")]
     public TerritoryPlane[] territoryPlanes;
+
+    [Header("通知UI")]
+    [SerializeField] private NotificationUI notificationUI;
 
     void Start()
     {
         AssignRandomPoints();
     }
 
-    /// <summary>
-    /// エリアに点数をランダムに割り当てる
-    /// </summary>
     void AssignRandomPoints()
     {
         List<int> pointsPool = new List<int>();
 
-        // 点数配分を作成
         pointsPool.AddRange(CreateList(5, 8));
         pointsPool.AddRange(CreateList(10, 7));
         pointsPool.AddRange(CreateList(15, 3));
         pointsPool.AddRange(CreateList(20, 2));
         pointsPool.AddRange(CreateList(50, 1));
 
-        // シャッフル
         for (int i = 0; i < pointsPool.Count; i++)
         {
             int rand = Random.Range(i, pointsPool.Count);
             (pointsPool[i], pointsPool[rand]) = (pointsPool[rand], pointsPool[i]);
         }
 
-        // 各エリアに割り当て
         for (int i = 0; i < territoryPlanes.Length && i < pointsPool.Count; i++)
         {
             string name = territoryPlanes[i].territoryName;
@@ -58,7 +62,6 @@ public class TerritoryManager : MonoBehaviour
         return list;
     }
 
-    // 既存のTryCapture
     public bool TryCapture(string name, TerritoryOwner player, int flagCount)
     {
         if (!territories.ContainsKey(name))
@@ -70,15 +73,26 @@ public class TerritoryManager : MonoBehaviour
 
         if (data.owner == player)
         {
-            return false; // 自分の陣地なら無視
+            return false;
         }
 
         if (data.owner == TerritoryOwner.None || flagCount > data.flagUsed)
         {
-            // 所有者と使用本数を更新
+            if (territoryPoints.ContainsKey(name))
+            {
+                int gained = territoryPoints[name] * flagCount;
+                totalScores[player] += gained;
+                Debug.Log($"[TerritoryManager] {player} が {name} を獲得: {gained}点 (累計 {totalScores[player]}点)");
+
+                if (notificationUI != null)
+                {
+                    string playerName = (player == TerritoryOwner.Player1) ? "Player1" : "Player2";
+                    notificationUI.Show($"{playerName} が {name} ({gained}点)を{flagCount}本で獲得！");
+                }
+            }
+
             territories[name] = (player, flagCount);
 
-            // 色変更を反映
             TerritoryPlane plane = FindPlaneByName(name);
             if (plane != null)
             {
@@ -91,7 +105,6 @@ public class TerritoryManager : MonoBehaviour
         return false;
     }
 
-    // 既存のRelease
     public void Release(string name, TerritoryOwner requester)
     {
         if (!territories.ContainsKey(name)) return;
@@ -148,30 +161,24 @@ public class TerritoryManager : MonoBehaviour
         return null;
     }
 
-    /// <summary>
-    /// プレイヤーの合計スコアを返す
-    /// </summary>
-    public int GetScore(PlayerTag playerTag)
+    public int CountAreasOwnedBy(TerritoryOwner owner)
     {
-        int total = 0;
+        int count = 0;
         foreach (var kvp in territories)
         {
-            var territoryName = kvp.Key;
-            var owner = kvp.Value.owner;
-
-            if ((playerTag == PlayerTag.Player1 && owner == TerritoryOwner.Player1) ||
-                (playerTag == PlayerTag.Player2 && owner == TerritoryOwner.Player2))
+            if (kvp.Value.owner == owner)
             {
-                if (territoryPoints.ContainsKey(territoryName))
-                    total += territoryPoints[territoryName];
+                count++;
             }
         }
-        return total;
+        return count;
     }
 
-    /// <summary>
-    /// 各エリアの点数一覧を取得
-    /// </summary>
+    public int GetScore(TerritoryOwner owner)
+    {
+        return totalScores.ContainsKey(owner) ? totalScores[owner] : 0;
+    }
+
     public Dictionary<string, int> GetTerritoryPoints()
     {
         return territoryPoints;

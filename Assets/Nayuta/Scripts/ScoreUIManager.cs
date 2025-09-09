@@ -16,10 +16,13 @@ public class ScoreUIManager : MonoBehaviour
     {
         if (territoryManager == null || scoreText == null) return;
 
-        // 指定されたプレイヤーのスコアを取得
-        int score = territoryManager.GetScore(playerTag);
+        // PlayerTag → TerritoryOwner 変換
+        TerritoryOwner owner = (playerTag == PlayerTag.Player1) ? TerritoryOwner.Player1 : TerritoryOwner.Player2;
 
-        // UIに表示
+        // 指定されたプレイヤーのスコアを取得
+        int score = territoryManager.GetScore(owner);
+
+        // UIに表示（例: "30 point"）
         scoreText.text = $"{score}";
     }
 }

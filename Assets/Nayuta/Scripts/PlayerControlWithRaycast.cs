@@ -7,7 +7,7 @@ public class PlayerControlWithRaycast : MonoBehaviour
     public ControlScheme controlScheme = ControlScheme.Player1;
 
     private Rigidbody rb;
-    private float moveSpeed = 25f;
+    private float moveSpeed = 50f;
 
     private float lookSpeed = 100f;
     private float cameraPitch = 20f;
@@ -15,21 +15,39 @@ public class PlayerControlWithRaycast : MonoBehaviour
     public Transform cameraPivot;
 
     [Header("References")]
-    [SerializeField] private FlagCaptureInput flagCaptureInput; // ← Inspectorからアサイン
-    [SerializeField] private FlagCaptureUI flagCaptureUI;       // ← Inspectorからアサイン
+    [SerializeField] private FlagCaptureInput flagCaptureInput;
+    [SerializeField] private FlagCaptureUI flagCaptureUI;
+    [SerializeField] private Animator animator;
 
     [Header("Raycast Settings")]
     public float rayDistance = 0.6f;
 
+    private float currentSpeed = 0f;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
+        string[] joystickNames = Input.GetJoystickNames();
+        for (int i = 0; i < joystickNames.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(joystickNames[i]))
+            {
+                Debug.Log($"Joystick {i + 1}: {joystickNames[i]}");
+            }
+        }
     }
 
     void Update()
     {
         HandleInput();
         HandleCamera();
+
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", currentSpeed);
+            //Debug.Log($"[{controlScheme}] Speed = {currentSpeed:F2}");
+        }
     }
 
     void FixedUpdate()
@@ -37,77 +55,64 @@ public class PlayerControlWithRaycast : MonoBehaviour
         HandleMovement();
     }
 
-    // --- 入力処理 ---
     void HandleInput()
     {
         string prefix = controlScheme == ControlScheme.Player1 ? "_P1" : "_P2";
 
-        // Capture開始 → Y
-        if (Input.GetButtonDown("Capture" + prefix))
-        {
-            Debug.Log($"[{controlScheme}] Capture Start (Y)");
-            flagCaptureInput?.StartCapture();
-        }
-
-        // Capture確定 → A
-        if (Input.GetButtonDown("Confirm" + prefix))
-        {
-            Debug.Log($"[{controlScheme}] Capture Confirm (A)");
-            flagCaptureInput?.ConfirmCapture();
-        }
-
-        // Cancel → B
-        if (Input.GetButtonDown("Cancel" + prefix))
-        {
-            Debug.Log($"[{controlScheme}] Cancel (B)");
-            flagCaptureInput?.CancelCapture();
-        }
-
-        // FlagDown → LB
-        if (Input.GetButtonDown("FlagDown" + prefix))
-        {
-            Debug.Log($"[{controlScheme}] FlagDown (LB)");
-            flagCaptureUI?.AdjustCount(-1);
-        }
-
-        // FlagUp → RB
-        if (Input.GetButtonDown("FlagUp" + prefix))
-        {
-            Debug.Log($"[{controlScheme}] FlagUp (RB)");
-            flagCaptureUI?.AdjustCount(1);
-        }
+        if (Input.GetButtonDown("Capture" + prefix)) flagCaptureInput?.StartCapture();
+        if (Input.GetButtonDown("Confirm" + prefix)) flagCaptureInput?.ConfirmCapture();
+        if (Input.GetButtonDown("Cancel" + prefix)) flagCaptureInput?.CancelCapture();
+        if (Input.GetButtonDown("FlagDown" + prefix)) flagCaptureUI?.AdjustCount(-1);
+        if (Input.GetButtonDown("FlagUp" + prefix)) flagCaptureUI?.AdjustCount(1);
     }
 
-    // --- 移動処理 ---
     void HandleMovement()
     {
         string horizontal = controlScheme == ControlScheme.Player1 ? "Horizontal_P1" : "Horizontal_P2";
         string vertical = controlScheme == ControlScheme.Player1 ? "Vertical_P1" : "Vertical_P2";
 
         float h = Input.GetAxis(horizontal);
-        float v = -Input.GetAxis(vertical); // 前後を反転
+        float v = -Input.GetAxis(vertical);
 
         Vector3 moveDirection = (transform.forward * v + transform.right * h).normalized;
         Vector3 targetPos = rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
 
-        // --- Raycastで壁チェック ---
+        // --- 全方位Raycastチェック ---
         if (moveDirection != Vector3.zero)
         {
-            if (Physics.Raycast(rb.position, moveDirection, out RaycastHit hit, rayDistance))
+            Vector3[] directions = {
+                transform.forward,
+                -transform.forward,
+                transform.right,
+                -transform.right,
+                (transform.forward + transform.right).normalized,
+                (transform.forward - transform.right).normalized,
+                (-transform.forward + transform.right).normalized,
+                (-transform.forward - transform.right).normalized
+            };
+
+            foreach (var dir in directions)
             {
-                if (hit.collider.CompareTag("Wall"))
+                if (Physics.Raycast(rb.position, dir, out RaycastHit hit, rayDistance))
                 {
-                    Vector3 slide = Vector3.ProjectOnPlane(moveDirection, hit.normal).normalized;
-                    targetPos = rb.position + slide * moveSpeed * Time.fixedDeltaTime;
+                    if (hit.collider.CompareTag("Wall"))
+                    {
+                        // 壁が検出された → スライド
+                        Debug.Log($"[{controlScheme}] Wall detected at {hit.point} in direction {dir}");
+                        Vector3 slide = Vector3.ProjectOnPlane(moveDirection, hit.normal).normalized;
+                        targetPos = rb.position + slide * moveSpeed * Time.fixedDeltaTime;
+                        break; // 最初に当たった壁だけ処理
+                    }
                 }
             }
         }
 
         rb.MovePosition(targetPos);
+
+        // アニメーション用
+        currentSpeed = moveDirection.magnitude;
     }
 
-    // --- カメラ処理 ---
-    // カメラ周回用の距離
     public float cameraDistance = 7.5f;
 
     void HandleCamera()
@@ -118,14 +123,12 @@ public class PlayerControlWithRaycast : MonoBehaviour
         float lookX = Input.GetAxis(mouseX);
         float lookY = -Input.GetAxis(mouseY);
 
-        // --- 左右回転（プレイヤー本体を回す）
         if (Mathf.Abs(lookX) > 0.01f)
         {
             Quaternion delta = Quaternion.Euler(0f, lookX * lookSpeed * Time.deltaTime, 0f);
             rb.MoveRotation(rb.rotation * delta);
         }
 
-        // --- 上下回転（カメラPivotをプレイヤーの周りに回す）
         cameraPitch = Mathf.Clamp(cameraPitch - lookY * lookSpeed * Time.deltaTime, -30f, 80f);
 
         if (cameraPivot != null)
@@ -133,8 +136,7 @@ public class PlayerControlWithRaycast : MonoBehaviour
             Vector3 offset = new Vector3(0, 0, -cameraDistance);
             Quaternion rotation = Quaternion.Euler(cameraPitch, 0, 0);
             cameraPivot.localPosition = rotation * offset;
-            cameraPivot.LookAt(transform.position + Vector3.up * 1.5f); // プレイヤーの頭あたりを見る
+            cameraPivot.LookAt(transform.position + Vector3.up * 1.5f);
         }
     }
-
 }
