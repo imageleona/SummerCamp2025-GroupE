@@ -27,6 +27,15 @@ public class PlayerControlWithRaycast : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
+        string[] joystickNames = Input.GetJoystickNames();
+        for (int i = 0; i < joystickNames.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(joystickNames[i]))
+            {
+                Debug.Log($"Joystick {i + 1}: {joystickNames[i]}");
+            }
+        }
     }
 
     void Update()
@@ -37,7 +46,7 @@ public class PlayerControlWithRaycast : MonoBehaviour
         if (animator != null)
         {
             animator.SetFloat("Speed", currentSpeed);
-            Debug.Log($"[{controlScheme}] Speed = {currentSpeed:F2}");
+            //Debug.Log($"[{controlScheme}] Speed = {currentSpeed:F2}");
         }
     }
 
