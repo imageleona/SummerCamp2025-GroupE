@@ -14,85 +14,49 @@ public class FlagCaptureUI : MonoBehaviour
 
     void Start()
     {
-        if (panel == null)
-        {
-            Debug.LogError("[FlagCaptureUI] panel is not assigned in Inspector.");
-        }
-
-        panel.SetActive(false);
+        if (panel != null)
+            panel.SetActive(false);
     }
 
-    void Update()
+    // PlayerControlWithRaycast ‚©‚çŒÄ‚Î‚ê‚é
+    public void AdjustCount(int delta)
     {
         if (!panel.activeSelf) return;
+        selectedFlagCount = Mathf.Clamp(selectedFlagCount + delta, minFlagCount, maxFlagCount);
+        UpdateCounterText();
+    }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            selectedFlagCount = Mathf.Max(minFlagCount, selectedFlagCount - 1);
-            UpdateCounterText();
-            Debug.Log("[FlagCaptureUI] Count decreased: " + selectedFlagCount);
-        }
+    public void ForceConfirm()
+    {
+        if (!panel.activeSelf) return;
+        onConfirm?.Invoke(selectedFlagCount);
+        Close();
+    }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            selectedFlagCount = Mathf.Min(maxFlagCount, selectedFlagCount + 1);
-            UpdateCounterText();
-            Debug.Log("[FlagCaptureUI] Count increased: " + selectedFlagCount);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            Debug.Log("[FlagCaptureUI] Confirm pressed. Selected: " + selectedFlagCount);
-            onConfirm?.Invoke(selectedFlagCount);
-            Close();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("[FlagCaptureUI] Cancel pressed.");
-            onCancel?.Invoke();
-            Close();
-        }
+    public void ForceCancel()
+    {
+        if (!panel.activeSelf) return;
+        onCancel?.Invoke();
+        Close();
     }
 
     public void Open(System.Action<int> confirmCallback, System.Action cancelCallback = null)
     {
-        Debug.Log("[FlagCaptureUI] Open() called");
-
         onConfirm = confirmCallback;
         onCancel = cancelCallback;
         selectedFlagCount = 1;
         UpdateCounterText();
-
-        if (panel == null)
-        {
-            Debug.LogError("[FlagCaptureUI] panel is NULL!");
-        }
-        else
-        {
-            Debug.Log("[FlagCaptureUI] panel.SetActive(true)");
-            panel.SetActive(true);
-        }
+        if (panel != null) panel.SetActive(true);
     }
 
     public void Close()
     {
-        Debug.Log("[FlagCaptureUI] UI closed.");
-        if (panel != null)
-        {
-            panel.SetActive(false);
-        }
+        if (panel != null) panel.SetActive(false);
     }
 
     void UpdateCounterText()
     {
         if (counterText != null)
-        {
-            counterText.text = "Flag Count: " + selectedFlagCount;
-        }
-        else
-        {
-            Debug.LogWarning("[FlagCaptureUI] counterText is NULL!");
-        }
+            counterText.text = selectedFlagCount + "–{";
     }
 }
