@@ -53,7 +53,7 @@ public class FlagCaptureInput : MonoBehaviour
             Debug.LogWarning($"[CaptureInput] Not enough flags. {playerTag} has {flagManager.GetFlags(playerTag)}");
             if (warningUI != null)
             {
-                warningUI.Show("残りの旗の本数を超えているよ \n旗の本数を減らしてね");
+                warningUI.Show("残りの旗の本数を超えているよ \n \n旗の本数を減らしてね");
             }
             return;
         }
@@ -68,7 +68,7 @@ public class FlagCaptureInput : MonoBehaviour
         {
             if (warningUI != null)
             {
-                warningUI.Show("ここはすでに相手が獲得したエリアだよ \n取り返すには旗の本数を増やしてみよう！");
+                warningUI.Show("ここはすでに相手が獲得したエリアだよ \n \n取り返すには旗の本数を増やしてみよう！");
             }
             Debug.LogWarning($"[CaptureInput] Failed to capture '{name}'. Use more flags than previous owner.");
         }
