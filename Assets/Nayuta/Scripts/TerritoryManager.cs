@@ -87,7 +87,7 @@ public class TerritoryManager : MonoBehaviour
                 if (notificationUI != null)
                 {
                     string playerName = (player == TerritoryOwner.Player1) ? "Player1" : "Player2";
-                    notificationUI.Show($"{playerName} が {name} ({gained}点)を{flagCount}本で獲得！");
+                    notificationUI.Show($"{playerName} が {name} ({territoryPoints[name]}点)を{flagCount}本で獲得！");
                 }
             }
 
