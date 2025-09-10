@@ -40,7 +40,7 @@ public class ResultUIManager : MonoBehaviour
         }
 
         // Ÿ”s”»’è‚ğ10•bŒã‚ÉÀs
-        StartCoroutine(ShowWinnerAfterDelay(10f));
+        StartCoroutine(ShowWinnerAfterDelay(5f));
     }
 
     IEnumerator ShowWinnerAfterDelay(float delay)
