@@ -86,9 +86,17 @@ public class TerritoryManager : MonoBehaviour
 
                 if (notificationUI != null)
                 {
-                    string playerName = (player == TerritoryOwner.Player1) ? "Player1" : "Player2";
-                    notificationUI.Show($"{playerName} が {name} ({territoryPoints[name]}点)を{flagCount}本で獲得！");
+                    string colorCode = (player == TerritoryOwner.Player1) ? "#0000FF" : "#FF0000"; // Player1=青, Player2=赤
+
+                    string playerName = $"<color={colorCode}>{(player == TerritoryOwner.Player1 ? "Player1" : "Player2")}</color>";
+                    string points = $"<color={colorCode}>{territoryPoints[name]}</color>";
+                    string flags = $"<color={colorCode}>{flagCount}</color>";
+
+                    notificationUI.Show(
+                        $"{playerName} が {name} ({points}点) を {flags}本で獲得！"
+                    );
                 }
+
             }
 
             territories[name] = (player, flagCount);
